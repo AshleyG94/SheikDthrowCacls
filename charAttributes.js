@@ -28,3 +28,4 @@ var characters = {
     "MrG&W": {NTSCweight:60, PALweight: 60, gravity: 0.095, terminalVelocity: 1.7, driftAcc: 0.05, driftMax: 1.0, djInitX: 0.9, djInitY: 2.23, airFriction: 0.016, djSetY: false, traction: 0.06},
     "Pichu": {NTSCweight:55, PALweight: 55, gravity: 0.11, terminalVelocity: 1.9, driftAcc: 0.05, driftMax: 0.85, djInitX: 0.85, djInitY: 2.6, airFriction: 0.01, djSetY: false, traction: 0.10}
 };
+module.exports = characters;

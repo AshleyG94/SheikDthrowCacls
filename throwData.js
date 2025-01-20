@@ -1,18 +1,4 @@
 
-/*throwAnim = {};
-
-throwAnim.Sm = {};
-throwAnim.Sm.uthrow = {};
-throwAnim.Sm.uthrow.throwN = [0.79793,41.7047];
-throwAnim.CF = {};
-throwAnim.CF.bthrow = {};
-throwAnim.CF.bthrow.throwN = [-11.360,22.2253];
-throwAnim.CF.fthrow = {};
-throwAnim.CF.fthrow.throwN = [7.53633,12.5128];
-throwAnim.Pi = {};
-throwAnim.Pi.bthrow = {};
-throwAnim.Pi.bthrow.throwN = [-2.819,6.70068];
-throwAnim.Pi.bthrow.transN = [-14.000,0];*/
 
 
 throwOffsets = {"Pichu":[0.0000,-4.5996],"Puff":[0.0000,-5.0000],"Kirby":[0.0000,-5.0000],"Popo":[0.0000,-5.0042],"Nana":[0.0000,-5.0042],"ICs":[0.0000,-5.0042],"Ness":[0.0000,-5.0042],"Yoshi":[0.0000,-5.6000],"Doc":[0.0000,-5.6672],"Luigi":[0.0000,-5.6672],"Mario":[0.0000,-5.6672],"Pika":[0.0000,-5.7997],"MrG&W":[0.0000,-6.1937],"Sheik":[-0.3466,-8.2405],"Falco":[0.0000,-8.3000],"Fox":[0.0000,-8.3000],"Link":[-0.2257,-8.5516],"Y.Link":[-0.2334,-8.5533],"Peach":[0.0000,-9.4000],"Zelda":[0.0000,-9.4000],"Marth":[-0.4263,-9.8485],"Roy":[-0.4263,-9.8485],"Mewtwo":[-0.2257,-10.3076],"DK":[0.0000,-13.4311],"Falcon":[0.4884,-13.8475],"Ganon":[0.4884,-13.8475],"Samus":[0.4884,-13.8475],"Bowser":[0.0000,-15.5250]};
@@ -520,3 +506,8 @@ throwAnim = { "CF":{
 "f20":{"throwN":[9.54888,3.61171]},
 "f21":{"throwN":[9.54850,3.61431]},
 "f22":{"throwN":[9.44461,3.52388]}}}};
+
+module.exports = {
+throwOffsets,
+throwFrames,
+throwAnim }

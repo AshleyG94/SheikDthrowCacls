@@ -1,6 +1,17 @@
-function Hit(percent, damagestaled, damageunstaled, growth, base, setKnockback, trajectory, character, version, xPos, yPos, crouch, reverse, chargeInterrupt, tdiX, tdiY, fadeIn, doubleJump, sdix, sdiy, zdix, zdiy, adix, adiy, meteorCancel, vcancel, grounded, metal, ice, icg, isThrow, throwChar, throwType, combo, comboFrame, yoshiDJArmor) {
-
+require('./charAttributes.js');
+require('./throwData.js');
+const characters = require('./charAttributes');
+const {throwOffsets, throwFrames, throwAnim} = require('./throwData.js')
+function Hit(percent, hitbox, character, version, xPos, yPos, crouch, reverse, chargeInterrupt, tdiX, tdiY, fadeIn, doubleJump, sdix, sdiy, zdix, zdiy, adix, adiy, meteorCancel, vcancel, grounded, metal, ice, icg, isThrow, throwChar, throwType, combo, comboFrame, yoshiDJArmor, prevVelocityX, prevVelocityY) {
+    
     /******* Internal functions start *******/
+    damagestaled = hitbox.dmg;
+    damageunstaled = hitbox.dmg;
+    growth = hitbox.kg;
+    base = hitbox.bk;
+    setKnockback = hitbox.wbk;
+    trajectory = hitbox.angle;
+
     var groundDownHit = false;
     var groundDownHitType;
     //Calculates base knockback from hit
@@ -604,9 +615,9 @@ function Hit(percent, damagestaled, damageunstaled, growth, base, setKnockback, 
       return [xDistance, yDistance];
     }
 
-    function transformComboVelocity(hit2x,hit2y,combo,comboFrame){
-      var hit1x = t["t"+combo].curPositions[comboFrame][2];
-      var hit1y = t["t"+combo].curPositions[comboFrame][3];
+    function transformComboVelocity(hit2x,hit2y,combo,comboFrame, prevVelocityX, prevVelocityY){
+      var hit1x = prevVelocityX;
+      var hit1y = prevVelocityY;
       var newHitx = 0;
       var newHity = 0;
       if (Math.sign(hit1x) == Math.sign(hit2x)){
@@ -678,6 +689,7 @@ function Hit(percent, damagestaled, damageunstaled, growth, base, setKnockback, 
     function getThrowFrames(throwChar,throwType,character){
       var release = throwFrames[throwChar][throwType+"throw"].release;
       var firstActionable = throwFrames[throwChar][throwType+"throw"].firstA;
+
       if (throwFrames[throwChar].weight[throwType]){
         release = Math.ceil(release*characters[character][version+"weight"]/100);
         firstActionable = Math.ceil(firstActionable*characters[character][version+"weight"]/100);
@@ -706,7 +718,6 @@ function Hit(percent, damagestaled, damageunstaled, growth, base, setKnockback, 
 
 
     /******* Variable setup start *******/
-
     if (!characters[character]) {
         throw("Bad character name given. Aborting.");
     }
@@ -726,6 +737,7 @@ function Hit(percent, damagestaled, damageunstaled, growth, base, setKnockback, 
     if (isThrow){
       var releasePoint = getReleasePoint(xPos,yPos,character,throwChar,throwType,reverse,version,grounded);
       var tFrames = getThrowFrames(throwChar,throwType,character);
+
     }
     else {
       var releasePoint = [0,0];
@@ -751,7 +763,7 @@ function Hit(percent, damagestaled, damageunstaled, growth, base, setKnockback, 
       verticalVelocity = getVerticalVelocity(knockback, trajectory, grounded);
       //console.log("horVel = "+horizontalVelocity);
       //console.log("verVel = "+verticalVelocity);
-      var newVector = transformComboVelocity(horizontalVelocity,verticalVelocity,combo,comboFrame);
+      var newVector = transformComboVelocity(horizontalVelocity,verticalVelocity,combo,comboFrame,prevVelocityX,prevVelocityY);
       horizontalVelocity = newVector[0];
       verticalVelocity = newVector[1];
       //console.log("newhorVel = "+horizontalVelocity);
@@ -766,6 +778,7 @@ function Hit(percent, damagestaled, damageunstaled, growth, base, setKnockback, 
       this.stacked = true;
       this.stackedTrajectory = trajectory;
     }
+    
     var angle = getAngle(trajectory, knockback, reverse, tdiX, tdiY);
     //console.log("angle = "+angle);
     horizontalVelocity = getHorizontalVelocity(knockback, angle, gravity);
@@ -818,3 +831,4 @@ function Hit(percent, damagestaled, damageunstaled, growth, base, setKnockback, 
     /******* Variable setup end *******/
 
 }
+module.exports = { Hit };

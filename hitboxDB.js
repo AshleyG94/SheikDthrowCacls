@@ -1,3 +1,4 @@
+
 var anumList = ["jab1","jab2","jab3","dashattack","ftiltHigh","ftiltMidHigh","ftiltMiddle","ftiltMidLow","ftiltLow","uptilt","downtilt","fsmashHigh","fsmashMidHigh","fsmashMiddle","fsmashMidLow","fsmashLow","upsmash","downsmash","nair","fair","bair","upair","dair","neutralb","sideb","upb","downb"];
 
 
@@ -5101,3 +5102,9 @@ chars.Ry.fthrow.id0 = new hitbox(5,45,45,0,70,'Normal');
 chars.Ry.bthrow.id0 = new hitbox(5,117,45,0,70,'Normal');
 chars.Ry.uthrow.id0 = new hitbox(5,97,130,0,60,'Normal');
 chars.Ry.dthrow.id0 = new hitbox(6,120,60,0,65,'Normal');
+
+module.exports = {
+  anumList,
+  hitbox,
+  chars,
+};
