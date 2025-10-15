@@ -119,7 +119,6 @@ for (let i = 0; i < 20; i++ )
         let uair_bad_di_end_position = get_ending_position('Puff', starting_percent, starting_pos, throw_tdi, fair_tdi, uair);
         let uair_good_di_killed = hit_killed(bzTop, bzRight, bzBottom, bzLeft, uair_good_di_end_position, starting_pos_x);
         let uair_bad_di_killed = hit_killed(bzTop, bzRight, bzBottom, bzLeft, uair_bad_di_end_position, starting_pos_x);
--0.6875 Y:0.7250
     
 
         output_data.push([starting_pos_x, fair_good_di_killed, fair_bad_di_killed, uair_good_di_killed, uair_bad_di_killed]);
