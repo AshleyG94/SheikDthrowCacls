@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>sheik downthrow mixup vs puff visualiser</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="button-group">
+            <img class="stage-img active" src = "stage_icons/bf.png" data-stage="bf" alt="Battlefield">
+            <img class="stage-img" src = "stage_icons/ys.png" data-stage="ys" alt="Yoshis Story">
+            <img class="stage-img" src = "stage_icons/ps.png" data-stage="ps" alt="Pokemon Stadium">
+            <img class="stage-img" src = "stage_icons/fd.png" data-stage="fd" alt="Final Destination">
+            <img class="stage-img" src = "stage_icons/fod.png" data-stage="fod" alt="Fountain of Dreams">
+            <img class="stage-img" src = "stage_icons/dl.png" data-stage="dl" alt="Dreamland">
+        </div>
+
+        <div class="stage-image-container" >
+            <img id="stageBackground" src="stage_images/bf.png">
+            <canvas id="canvasOverlay"></canvas>
+        </div>
+
+        <div class="percent-selector">
+            <input type="number" id="percentInput" min="1" max="200" value="80">
+            <button id="runBtn">Calculate Positions</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
