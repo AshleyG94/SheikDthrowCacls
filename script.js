@@ -24,7 +24,7 @@ stage_buttons.forEach(button => {
             resize_canvas(image_height, image_width)
             
             
-            //set current stage dimensions
+            //set current stage dimensions woo i made some changes
         });  
 });
 
