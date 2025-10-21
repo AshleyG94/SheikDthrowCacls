@@ -24,9 +24,14 @@ stage_buttons.forEach(button => {
             resize_canvas(image_height, image_width)
             
             
-            //set current stage dimensions woo i made some changes
+            //set current stage dimensions
         });  
 });
+
+function calculatePercents(){
+    const new_percent = percent_input.value 
+    console.log(new_percent)
+}
 
 function ResizeCanvas(new_width, new_height){
     canvas.width = new_width

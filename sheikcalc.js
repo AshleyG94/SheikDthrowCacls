@@ -4,7 +4,7 @@ require('./calculatormaths.js')
 const characters = require('./charAttributes');
 const { anumList, hitbox, chars } = require('./hitboxDB.js');
 const { Hit } = require('./calculatormaths');
-const fs = require('fs');
+const fs = require('fs'); //foo
 
 function get_ending_position(enemy, starting_percent, start_pos, throw_tdi, hit_tdi, hit_hitbox)
 {  
