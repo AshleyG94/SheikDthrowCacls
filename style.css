@@ -23,7 +23,7 @@ body {
     margin-bottom: 20px;
 }
 
-.stage-img {
+.stage-btn {
   width: 60px;
   height: 60px;
   object-fit: contain;
@@ -31,15 +31,32 @@ body {
   transition: filter 0.3s, transform 0.2s;
   filter: grayscale(0%);
   border-radius: 12px;
-  
-  
-  
+
 }
 
-.stage-img.active {
+.stage-btn.active {
   border: 3px solid #7a5cff; 
   box-shadow: 
     0 0 12px 3px rgba(122, 92, 255, 0.7), 
     0 0 25px 8px rgba(120, 170, 255, 0.3); 
   transform: scale(1.1); 
+}
+
+.stage-image-container {
+  position: relative;
+  display: inline-block;
+  margin: 0px 0;
+}
+
+#stageBackground {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+#canvasOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none; /* Allow clicking through canvas to image */
 }

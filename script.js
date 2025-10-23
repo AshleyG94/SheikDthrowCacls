@@ -1,4 +1,4 @@
-let stage_buttons = document.querySelectorAll(".stage-img")
+let stage_buttons = document.querySelectorAll(".stage-btn")
 let stage_image = document.querySelector("#stageBackground")
 let canvas = document.querySelector("#canvasOverlay")
 let percent_input = document.querySelector("#percentInput")
@@ -10,7 +10,13 @@ console.log(stage_image)
 console.log(canvas)
 console.log(percent_input)
 console.log(run_btn)
-console.log("foo")
+
+// Initialize canvas size when page loads
+window.addEventListener('load', function() {
+    const image_width = stage_image.clientWidth
+    const image_height = stage_image.clientHeight
+    ResizeCanvas(image_width, image_height)
+})
 
 stage_buttons.forEach(button => {
     button.addEventListener('click',
@@ -19,10 +25,12 @@ stage_buttons.forEach(button => {
             stage_buttons.forEach(button => button.classList.remove('active'))
             button.classList.add('active')
 
-            const image_height = stage_image.clientHeight
-            const image_width = stage_image.clientWidth
-            resize_canvas(image_height, image_width)
-            
+            // Wait for image to load before getting dimensions
+            stage_image.onload = function() {
+                const image_width = stage_image.clientWidth
+                const image_height = stage_image.clientHeight
+                ResizeCanvas(image_width, image_height)
+            }
             
             //set current stage dimensions
         });  
@@ -30,18 +38,31 @@ stage_buttons.forEach(button => {
 
 function calculatePercents(){
     const new_percent = percent_input.value 
+    test()
     console.log(new_percent)
 }
 
 function ResizeCanvas(new_width, new_height){
     canvas.width = new_width
     canvas.height = new_height
+    console.log(`Canvas resized to: ${new_width}x${new_height}`)
 }
 
 function ClearCanvas(){
     const context = canvas.getContext('2d')
-    context.clearRext(0,0,canvas.width, canvas.height)
+    context.clearRect(0,0,canvas.width, canvas.height)
 }
 function test(){
-    console.log("button clicked")
+    const ctx = canvas.getContext('2d')
+    console.log(`Canvas dimensions: ${canvas.width}x${canvas.height}`)
+    
+   
+    ctx.fillStyle = "red";
+    ctx.globalAlpha = 0.2;
+    ctx.fillRect(0,0,200,200);
+    ctx.globalAlpha = 1.0;
+    // Add a circle in the center
+   
+    
+    console.log("Drawing complete")
 }
