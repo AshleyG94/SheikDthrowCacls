@@ -1,10 +1,95 @@
-require('./charAttributes.js');
-require('./hitboxDB.js');
-require('./calculatormaths.js')
-const characters = require('./charAttributes');
-const { anumList, hitbox, chars } = require('./hitboxDB.js');
-const { Hit } = require('./calculatormaths');
-const fs = require('fs'); //foo
+import './charAttributes.js';
+import './hitboxDB.js';
+import './calculatormaths.js';
+
+import characters from './charAttributes.js';
+import { anumList, hitbox, chars } from './hitboxDB.js';
+import { Hit } from './calculatormaths.js';
+
+/*fair good, fair bad, uair good, uair bad
+0 0 0 0 = Any DI
+0 0 0 1 = Di for uair
+0 0 1 0 = Not possible
+0 0 1 1 = Dead to uair
+0 1 0 0 = Di for fair
+0 1 0 1 = True mixup
+0 1 1 0 = Not possible
+0 1 1 1 = Dead to uair Di For Fair
+1 0 0 0 = Not possible
+1 0 0 1 = Not possible
+1 0 1 0 = Not possible
+1 0 1 1 = Not possible
+1 1 0 0 = Dead to fair
+1 1 0 1 = Dead to fair Di for Uair
+1 1 1 0 = Not possible
+1 1 1 1 = Always dead*/
+
+
+
+  
+
+  export const MixupResult = Object.freeze({
+    ANY_DI: 'any_di',
+    DI_FOR_UAIR: 'di_for_uair',
+    DEAD_TO_UAIR: 'dead_to_uair',
+    DI_FOR_FAIR: 'di_for_fair',
+    TRUE_MIXUP: 'true_mixup',
+    DEAD_TO_UAIR_DI_FAIR: 'dead_to_uair_di_fair',
+    DEAD_TO_FAIR: 'dead_to_fair',
+    DEAD_TO_FAIR_DI_UAIR: 'dead_to_fair_di_uair',
+    ALWAYS_DEAD: 'always_dead',
+    NOT_POSSIBLE: 'not_possible',
+  });
+
+  export const MIXUP_COLOURS = {
+    [MixupResult.ANY_DI]: "#A0A0A0",
+    [MixupResult.DI_FOR_UAIR]: "#1E90FF",
+    [MixupResult.NOT_POSSIBLE]: "#000000",
+    [MixupResult.DEAD_TO_UAIR]: "#FF4500",
+    [MixupResult.DI_FOR_FAIR]: "#32CD32",
+    [MixupResult.TRUE_MIXUP]: "#FFD700",
+    [MixupResult.DEAD_TO_UAIR_DI_FAIR]: "#FF69B4",
+    [MixupResult.DEAD_TO_FAIR]: "#FF0000",
+    [MixupResult.DEAD_TO_FAIR_DI_UAIR]: "#8B0000",
+    [MixupResult.ALWAYS_DEAD]: "#4B0082",
+  };
+
+  const MIXUP_TABLE = {
+    0b0000: MixupResult.ANY_DI,
+    0b0001: MixupResult.DI_FOR_UAIR,
+    0b0010: MixupResult.NOT_POSSIBLE,
+    0b0011: MixupResult.DEAD_TO_UAIR,
+  
+    0b0100: MixupResult.DI_FOR_FAIR,
+    0b0101: MixupResult.TRUE_MIXUP,
+    0b0110: MixupResult.NOT_POSSIBLE,
+    0b0111: MixupResult.DEAD_TO_UAIR_DI_FAIR,
+  
+    0b1000: MixupResult.NOT_POSSIBLE,
+    0b1001: MixupResult.NOT_POSSIBLE,
+    0b1010: MixupResult.NOT_POSSIBLE,
+    0b1011: MixupResult.NOT_POSSIBLE,
+  
+    0b1100: MixupResult.DEAD_TO_FAIR,
+    0b1101: MixupResult.DEAD_TO_FAIR_DI_UAIR,
+    0b1110: MixupResult.NOT_POSSIBLE,
+    0b1111: MixupResult.ALWAYS_DEAD,
+  };
+
+  function classifyMixup({
+    fairGoodDI,
+    fairBadDI,
+    uairGoodDI,
+    uairBadDI
+  }) {
+    const mask =
+      (fairGoodDI << 3) |
+      (fairBadDI  << 2) |
+      (uairGoodDI << 1) |
+      (uairBadDI);
+  
+    return MIXUP_TABLE[mask];
+  }
 
 function get_ending_position(enemy, starting_percent, start_pos, throw_tdi, hit_tdi, hit_hitbox)
 {  
@@ -39,21 +124,21 @@ function get_ending_position(enemy, starting_percent, start_pos, throw_tdi, hit_
 
     //The fair is hitting now, isThrow is now false, update some variables due to the first hit, and deal with the update to percent
     
-    isThrow = false;
-    grounded = false;
-    fadeIn = true;
+    var isThrow = false;
+    var grounded = false;
+    var fadeIn = true;
 
     //where the dthrow hits from
-    hit_pos_x = foo.positions[foo.hitstun - 1][0];
-    hit_pos_y = foo.positions[foo.hitstun - 1][1];
+    var hit_pos_x = foo.positions[foo.hitstun - 1][0];
+    var hit_pos_y = foo.positions[foo.hitstun - 1][1];
 
     //Puffs velocity at end of hitstun
-    prevVelocityX = foo.positions[foo.hitstun - 1][2];
-    prevVelocityY = foo.positions[foo.hitstun - 1][3];
+    var prevVelocityX = foo.positions[foo.hitstun - 1][2];
+    var prevVelocityY = foo.positions[foo.hitstun - 1][3];
 
     //Set combo count 
-    combo = 1;
-    comboFrame = foo.hitstun - 1;
+    var combo = 1;
+    var comboFrame = foo.hitstun - 1;
 
     //Add percent from dthrow - note not what is listed in sheik dthrow id0 damage
     let second_percent = starting_percent + 8;
@@ -75,36 +160,27 @@ function hit_killed(bzTop, bzRight, bzBottom, bzLeft, end_position, start_positi
         
         if (x >= bzRight || x <= bzLeft || y <= bzBottom || (y >= bzTop && end_position[i][3] >= 2.4))
         {
-            if ( start_position > 33 && start_position < 35 )
-            {
-                console.log(x);
-                console.log(y);
-                console.log(i);
-                console.log(bzRight);
-            }
+            
             return 1;
         }
     }
     return 0;
 }
-   
 
-
-for (let i = 0; i < 20; i++ )
+function get_array_for_percent(percent, stage_start, stage_end)
 {
-    const starting_percent = 70 + i*2;
+    let results = []
     let throw_tdi = [1.0,0];
-    let throw_tdi_in = [-0.6875, 0.7250];
     let fair_tdi = [-0.4125, 0.9125];
     let uair_tdi = [1.0, 0.0]
-    let output_data = [['StartPos','fgdi', 'fbdi', 'ugdi','ubdi']];
+
     for ( let i = 0; i < 101; i++ )
     {
-        const starting_pos_x = -85.56570 + (85.56570 * 2)*0.01*i;
-        const starting_pos = [starting_pos_x, 0.0];
+        const starting_pos_x = stage_start[0] + (((stage_end[0] - stage_start[0])/100) * i)
+        const starting_pos = [starting_pos_x, stage_start[1]];
         let fair = chars.Sh.fair.id0;
-        let fair_good_di_end_position = get_ending_position('Puff', starting_percent, starting_pos, throw_tdi, fair_tdi, fair);
-        let fair_bad_di_end_position = get_ending_position('Puff', starting_percent, starting_pos, throw_tdi, uair_tdi, fair);
+        let fair_good_di_end_position = get_ending_position('Puff', percent, starting_pos, throw_tdi, fair_tdi, fair);
+        let fair_bad_di_end_position = get_ending_position('Puff', percent, starting_pos, throw_tdi, uair_tdi, fair);
 
         let bz = [188,246,-140,-246];
         let bzTop = bz[0];
@@ -115,15 +191,24 @@ for (let i = 0; i < 20; i++ )
         let fair_bad_di_killed = hit_killed(bzTop, bzRight, bzBottom, bzLeft, fair_bad_di_end_position, starting_pos_x);
 
         let uair = chars.Sh.uair.clean.id0;
-        let uair_good_di_end_position = get_ending_position('Puff', starting_percent, starting_pos, throw_tdi, uair_tdi, uair);
-        let uair_bad_di_end_position = get_ending_position('Puff', starting_percent, starting_pos, throw_tdi, fair_tdi, uair);
+        let uair_good_di_end_position = get_ending_position('Puff', percent, starting_pos, throw_tdi, uair_tdi, uair);
+        let uair_bad_di_end_position = get_ending_position('Puff', percent, starting_pos, throw_tdi, fair_tdi, uair);
         let uair_good_di_killed = hit_killed(bzTop, bzRight, bzBottom, bzLeft, uair_good_di_end_position, starting_pos_x);
         let uair_bad_di_killed = hit_killed(bzTop, bzRight, bzBottom, bzLeft, uair_bad_di_end_position, starting_pos_x);
-    
 
-        output_data.push([starting_pos_x, fair_good_di_killed, fair_bad_di_killed, uair_good_di_killed, uair_bad_di_killed]);
+        results.push({
+            starting_pos_x,
+            result: classifyMixup({
+              fairGoodDI: fair_good_di_killed,
+              fairBadDI: fair_bad_di_killed,
+              uairGoodDI: uair_good_di_killed,
+              uairBadDI: uair_bad_di_killed
+            })
+          });
     }
-    const csv_output = output_data.map(row => row.join(',')).join('\n');
-    let string = 'FD' + starting_percent + '.csv';
-    fs.writeFileSync(string, csv_output, 'utf8');
+    return results
 }
+
+export {
+    get_array_for_percent,
+  };

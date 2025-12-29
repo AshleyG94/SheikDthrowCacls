@@ -1,32 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>sheik downthrow mixup vs puff visualiser</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>sheik downthrow mixup vs puff visualiser</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body>
-    <div class="container">
-        <div class="button-group">
-            <img class="stage-btn active" src = "stage_icons/bf.png" data-stage="bf" alt="Battlefield">
-            <img class="stage-btn" src = "stage_icons/ys.png" data-stage="ys" alt="Yoshis Story">
-            <img class="stage-btn" src = "stage_icons/ps.png" data-stage="ps" alt="Pokemon Stadium">
-            <img class="stage-btn" src = "stage_icons/fd.png" data-stage="fd" alt="Final Destination">
-            <img class="stage-btn" src = "stage_icons/fod.png" data-stage="fod" alt="Fountain of Dreams">
-            <img class="stage-btn" src = "stage_icons/dl.png" data-stage="dl" alt="Dreamland">
-        </div>
 
-        <div class="stage-image-container" >
-            <img id="stageBackground" src="stage_images/bf.png">
-            <canvas id="canvasOverlay"></canvas>
+<body>
+  <div class="container">
+
+    <div class="button-group">
+      <img class="stage-btn active" src="stage_icons/bf.png"  data-stage="bf"  alt="Battlefield">
+      <img class="stage-btn"        src="stage_icons/ys.png"  data-stage="ys"  alt="Yoshis Story">
+      <img class="stage-btn"        src="stage_icons/ps.png"  data-stage="ps"  alt="Pokemon Stadium">
+      <img class="stage-btn"        src="stage_icons/fd.png"  data-stage="fd"  alt="Final Destination">
+      <img class="stage-btn"        src="stage_icons/fod.png" data-stage="fod" alt="Fountain of Dreams">
+      <img class="stage-btn"        src="stage_icons/dl.png"  data-stage="dl"  alt="Dreamland">
+    </div>
+
+    <!-- Two columns: left = stage, right = legend -->
+    <div class="main-row">
+
+      <div class="left-panel">
+        <div class="stage-image-container">
+          <img id="stageBackground" src="stage_images/bf.png" alt="Stage background">
+          <canvas id="canvasOverlay"></canvas>
         </div>
 
         <div class="percent-selector">
-            <input type="number" id="percentInput" min="1" max="200" value="80">
-            <button id="runBtn" onclick=calculatePercents()>Calculate Positions</button>
+          <input type="number" id="percentInput" min="1" max="200" value="80">
+          <button id="runBtn">Calculate Positions</button>
         </div>
-    </div>
-    
-    <script src="script.js"></script>
+      </div>
 
+      <aside class="legend">
+        <h3 class="legend-title">Legend</h3>
+
+        <div class="legend-row" style="--row-color:#32CD32">
+          <div class="legend-swatch" style="background:#32CD32"></div>
+          <div class="legend-label">DI for Fair</div>
+        </div>
+
+        <div class="legend-row" style="--row-color:#1E90FF">
+          <div class="legend-swatch" style="background:#1E90FF"></div>
+          <div class="legend-label">DI for Uair</div>
+        </div>
+
+        <div class="legend-row" style="--row-color:#FFD700">
+          <div class="legend-swatch" style="background:#FFD700"></div>
+          <div class="legend-label">True Mixup</div>
+        </div>
+
+        <div class="legend-row" style="--row-color:#A0A0A0">
+          <div class="legend-swatch" style="background:#A0A0A0"></div>
+          <div class="legend-label">Any DI</div>
+        </div>
+
+        <div class="legend-row" style="--row-color:#FF0000">
+          <div class="legend-swatch" style="background:#FF0000"></div>
+          <div class="legend-label">Dead to Fair</div>
+        </div>
+
+        <div class="legend-row" style="--row-color:#FF4500">
+          <div class="legend-swatch" style="background:#FF4500"></div>
+          <div class="legend-label">Dead to Uair</div>
+        </div>
+
+        <div class="legend-row" style="--row-color:#4B0082">
+          <div class="legend-swatch" style="background:#4B0082"></div>
+          <div class="legend-label">Always Dead</div>
+        </div>
+
+        <div class="legend-row" style="--row-color:#000000">
+          <div class="legend-swatch" style="background:#000000"></div>
+          <div class="legend-label">Not Possible</div>
+        </div>
+      </aside>
+
+    </div>
+
+  </div>
+
+  <script type="module" src="script.js"></script>
 </body>
+</html>

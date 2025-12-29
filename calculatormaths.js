@@ -1,16 +1,17 @@
-require('./charAttributes.js');
-require('./throwData.js');
-const characters = require('./charAttributes');
-const {throwOffsets, throwFrames, throwAnim} = require('./throwData.js')
+import characters from './charAttributes.js';
+import throwData from './throwData.js';
+
+const { throwOffsets, throwFrames, throwAnim } = throwData;
+
 function Hit(percent, hitbox, character, version, xPos, yPos, crouch, reverse, chargeInterrupt, tdiX, tdiY, fadeIn, doubleJump, sdix, sdiy, zdix, zdiy, adix, adiy, meteorCancel, vcancel, grounded, metal, ice, icg, isThrow, throwChar, throwType, combo, comboFrame, yoshiDJArmor, prevVelocityX, prevVelocityY) {
     
     /******* Internal functions start *******/
-    damagestaled = hitbox.dmg;
-    damageunstaled = hitbox.dmg;
-    growth = hitbox.kg;
-    base = hitbox.bk;
-    setKnockback = hitbox.wbk;
-    trajectory = hitbox.angle;
+    let damagestaled = hitbox.dmg;
+    let damageunstaled = hitbox.dmg;
+    let growth = hitbox.kg;
+    let base = hitbox.bk;
+    let setKnockback = hitbox.wbk;
+    let trajectory = hitbox.angle;
 
     var groundDownHit = false;
     var groundDownHitType;
@@ -160,7 +161,8 @@ function Hit(percent, hitbox, character, version, xPos, yPos, crouch, reverse, c
         if (y < 0.2875 && y > -0.2875){
           y = 0;
         }
-
+        
+        var diAngle = 0;
         if (x == 0 && y < 0){
           diAngle = 270;
         }
@@ -831,4 +833,4 @@ function Hit(percent, hitbox, character, version, xPos, yPos, crouch, reverse, c
     /******* Variable setup end *******/
 
 }
-module.exports = { Hit };
+export { Hit }

@@ -11,7 +11,7 @@ function hitbox(dmg, angle, kg, wbk, bk, effect) {
   this.effect = effect
 }
 
-chars = {};
+let chars = {};
 
 chars.Zd = {};
 chars.Zd.unknown = {};
@@ -5103,8 +5103,4 @@ chars.Ry.bthrow.id0 = new hitbox(5,117,45,0,70,'Normal');
 chars.Ry.uthrow.id0 = new hitbox(5,97,130,0,60,'Normal');
 chars.Ry.dthrow.id0 = new hitbox(6,120,60,0,65,'Normal');
 
-module.exports = {
-  anumList,
-  hitbox,
-  chars,
-};
+export { anumList, hitbox, chars };
